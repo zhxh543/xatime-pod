@@ -1,58 +1,80 @@
-<style scoped>
-    .index {
-        width: 100%;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        text-align: center;
-    }
-
-    .index h1 {
-        height: 150px;
-    }
-
-    .index h1 img {
-        height: 100%;
-    }
-
-    .index h2 {
-        color: #666;
-        margin-bottom: 200px;
-    }
-
-    .index h2 p {
-        margin: 0 0 50px;
-    }
-
-    .index .ivu-row-flex {
-        height: 100%;
-    }
-</style>
 <template>
-    <div class="index">
-        <Row type="flex" justify="center" align="middle">
-            <Col span="24">
-                <h1>
-                    <img src="https://raw.githubusercontent.com/iview/iview/master/assets/logo.png">
-                </h1>
-                <h2>
-                    <p>Welcome to your iView app!</p>
-                    <Button type="ghost" @click="handleStart">Start iView</Button>
-                </h2>
-            </Col>
-        </Row>
+    <div id="a">
+        <template>
+            <el-select ref="select" v-model="value" placeholder="请选择">
+                <el-option :key="value" :label="value" :value="value">
+                    <el-tree :data="tree" accordion :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+                </el-option>
+            </el-select>
+            <router-link to="/drag">自定义报表</router-link>
+        </template>
     </div>
 </template>
+<style>
+    .el-select-dropdown__item{
+        height: auto !important;
+    }
+    .el-select{
+        width: 100%;
+    }
+</style>
 <script>
     export default {
+        data() {
+            return {
+                tree: [{
+                    label: '一级 1',
+                    children: [{
+                        label: '二级 1-1',
+                        children: [{
+                            label: '三级 1-1-1'
+                        }]
+                    }]
+                }, {
+                    label: '一级 2',
+                    children: [{
+                        label: '二级 2-1',
+                        children: [{
+                            label: '三级 2-1-1'
+                        }]
+                    }, {
+                        label: '二级 2-2',
+                        children: [{
+                            label: '三级 2-2-1'
+                        }]
+                    }]
+                }, {
+                    label: '一级 3',
+                    children: [{
+                        label: '二级 3-1',
+                        children: [{
+                            label: '三级 3-1-1'
+                        }]
+                    }, {
+                        label: '二级 3-2',
+                        children: [{
+                            label: '三级 3-2-1'
+                        }]
+                    }]
+                }],
+                defaultProps: {
+                    children: 'children',
+                    label: 'label'
+                },
+                value: '',
+                label:''
+            };
+        },
         methods: {
-            handleStart() {
-                this.$Modal.info({
-                    title: 'Bravo',
-                    content: 'Now, enjoy the convenience of iView.'
-                });
+            handleNodeClick(data) {
+                let $this = this;
+                $this.value = data.label;
+                if(data)
+                    $this.$refs['select'].blur();
             }
+        },
+        mounted() {
+            // console.log(this.options);
         }
     };
 </script>

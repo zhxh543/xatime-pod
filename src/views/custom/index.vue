@@ -1,92 +1,122 @@
 <template>
     <div id="custom">
-        <!--<draggable v-model="tags" :move="getdata" @update="datadragEnd">-->
-        <!--<transition-group>-->
-        <!--<div v-for="element in tags" :key="element.id">-->
-        <!--{{element.name}}-->
+        <el-row :gutter="30">
+            <el-col :span="18">
+                <div class="custom_box">
+                    <draggable :list="tools" v-if="tools.length > 0" :options="{handle:'.custom_label'}">
+                        <transition-group>
+                            <div v-for="(item,index) in tools" :key="item.id">
+                                <div class="tools_item">
+                                    <span class="custom_label">这是输入框{{item.id}}：</span>
+                                    <el-input v-if="item.type === 'input'"></el-input>
+                                </div>
+                            </div>
+                        </transition-group>
+                    </draggable>
+                    <template v-else>
+                        请在右侧选择需要添加的控件！
+                    </template>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="custom_tools">
+                    <ul>
+                        <li @click="addTool">input输入框</li>
+                    </ul>
+                </div>
+            </el-col>
+        </el-row>
+        <!--<draggable :list="list2" :move="getdata" @update="datadragEnd" @end="datadragEnd" @start="start" :options="{handle:'.dargDiv'}">-->
+        <!--<transition-group name="list-complete" >-->
+        <!--<div v-for="element in list2" :key="element.it.name" class="list-complete-item">-->
+        <!--<div class="styleclass dargDiv">{{element.id}}</div>-->
+        <!--<div class="styleclass">{{element.it.name}}</div>-->
         <!--</div>-->
         <!--</transition-group>-->
         <!--</draggable>-->
-
-        <!--<draggable v-model="tags" :options="{animation:300}" :move="getdata" @end="datadragEnd" @start="start">-->
-            <!--<div v-for="(item,index) in tags" :key="item.id">-->
-                <!--{{item.name}}-->
-            <!--</div>-->
+        <!--<draggable :list="list" :move="getdata" @update="datadragEnd" @end="datadragEnd" @start="start" :options="{handle:'.dargDiv'}">-->
+        <!--<transition-group name="list-complete" >-->
+        <!--<div v-for="element in list" :key="element.it.name" class="list-complete-item">-->
+        <!--<div class="styleclass dargDiv">{{element.id}}</div>-->
+        <!--<div class="styleclass">{{element.it.name}}</div>-->
+        <!--</div>-->
+        <!--</transition-group>-->
         <!--</draggable>-->
-        <draggable :list="list2" :move="getdata" @update="datadragEnd" @end="datadragEnd" @start="start" :options="{handle:'.dargDiv'}">
-            <transition-group name="list-complete" >
-                <div v-for="element in list2" :key="element.it.name" class="list-complete-item">
-                    <div class="styleclass dargDiv">{{element.id}}</div>
-                    <div class="styleclass">{{element.it.name}}</div>
-                </div>
-            </transition-group>
-        </draggable>
-        <el-button @click="addTag">添加元素</el-button>
+        <!--<el-button @click="addTag">添加元素</el-button>-->
+
+        <!--<div class='drag-content'>-->
+        <!--<div class='project-content'>-->
+        <!--<div class='select-item' draggable='true' @dragstart='drag($event)' v-for='pjdt in projectdatas'>{{pjdt.name}}</div>-->
+        <!--</div>-->
+        <!--<div class='people-content'>-->
+        <!--<div class='drag-div' v-for='(ppindex,ppdt) in peopledata' @drop='drop($event)' @dragover='allowDrop($event)'>-->
+        <!--<div class='select-project-item'>-->
+        <!--<label class='drag-people-label'>{{ppindex.name}}：</label>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
     </div>
 </template>
 <style>
-    body{
-        font-family:'微软雅黑'
+    body {
+        font-family: '微软雅黑';
+        margin: 0;
+        padding: 0;
     }
-    [v-cloak]{
-        display:none;
+
+    [v-cloak] {
+        display: none;
     }
-    #example{
-        width:1000px;
-        margin:0 auto;
+
+    .custom_box {
+        width: 100%;
+        min-height: 1px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        overflow: hidden;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
     }
-    .list-complete-item {
-        transition: all 1s;
-        height:50px;
-        line-height: 50px;
-        background: #000;
-        color:#fff;
-        text-align: center;
-        font-size:24px;
-        margin-top:10px;
+
+    .custom_tools {
+        width: 100%;
+        min-height: 1px;
+        border: 1px solid #cccccc;
     }
-    .styleclass{
-        width:100px;
-        float:left;
+
+    .custom_label {
+        display: block;
+        width: 20%;
+        float: left;
+        text-align: right;
+        font-size: 14px;
+        line-height: 40px;
+        cursor: default;
     }
-    .list-complete-enter, .list-complete-leave-active {
-        opacity: 0;
-        height: 0px;
-        margin-top: 0px;
-        padding: 0px;
-        border: solid 0px;
+
+    .tools_item {
+        width: 40%;
+        float: left;
+        margin: 10px 0;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
     }
-    .list-complete-sortable-chosen,.list-complete-sortable-ghost{
-        opacity: 0;
-        height: 0px;
-        margin-top: 0px;
-        padding: 0px;
-        border: solid 0px;
-    }
-    .dargDiv{
-        cursor:move;
-        background:red;
-    }
-    .wrods{
-        margin-top:50px;
-    }
-    p{
-        line-height:24px;
-        text-align:center;
+
+    .tools_item .el-input {
+        width: 80%;
     }
 </style>
 <script>
+    let dom = '';
     import draggable from 'vuedraggable'
 
     export default {
         data() {
             return {
-                list2:[
-                    {id:"id1",it:{name:'bbbb'}},
-                    {id:"id2",it:{name:'2222'}},
-                    {id:"id3",it:{name:'3333'}},
-                    {id:"id4",it:{name:'4444'}}
-                ]
+                tools: []
             }
         },
         components: {
@@ -99,17 +129,17 @@
 
         },
         methods: {
-            addTag(){
+            addTool() {
+                let $this = this;
                 let o = {
-                    id:'id6',
-                    it:{
-                        name:'6666666666666666'
-                    }
-                }
-                this.list2.push(o);
+                    id: $this.tools.length,
+                    type: 'input'
+                };
+                $this.tools.push(o);
             },
-            start() {
-                console.log('拖动开始')
+            updateDrag() {
+                let $this = this;
+                console.log($this.tools);
             },
             getdata(evt) {
                 console.log(evt.draggedContext.element.id)
@@ -117,7 +147,30 @@
             datadragEnd(evt) {
                 console.log('拖动前的索引 :' + evt.oldIndex)
                 console.log('拖动后的索引 :' + evt.newIndex)
-                console.log(this.list2);
+                console.log(this.tags)
+            },
+            drag(event) {
+                dom = event.currentTarget;
+            },
+            drop(event) {
+                event.preventDefault();
+                console.log('我是target')
+                console.log(event.srcElement.className)
+                if (event.srcElement.className != 'select-item') {
+                    event.target.appendChild(dom);
+                    console.log(dom);
+                } else {
+                    alert('该位置已被占用');
+                }
+            },
+            allowDrop(event) {
+                event.preventDefault(); //preventDefault() 方法阻止元素发生默认的行为（例如，当点击提交按钮时阻止对表单的提交）
+            },
+            checkMove(evt) {
+                console.log(111111111111111111111)
+                console.log(evt.draggedContext.element.name)
+                alert(1)
+                return (evt.draggedContext.element.name !== 'apple');
             }
         }
     };

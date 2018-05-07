@@ -7,9 +7,12 @@ import ElementUI from 'element-ui'
 import less from 'less'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@static/css/reset.css'
+import echarts from 'echarts'
+
 
 Vue.use(ElementUI)
 Vue.use(less)
+Vue.prototype.$echarts = echarts
 
 Vue.config.productionTip = false
 

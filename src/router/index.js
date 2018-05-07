@@ -7,6 +7,8 @@ import reportIndex from '@/components/report/index'
 import reportData from '@/components/report/dataSet'
 import reportControl from '@/components/report/control'
 import reportEdit from '@/components/report/report'
+import charts from '@/components/report/charts'
+import draw from '@/components/report/draw'
 
 Vue.use(Router)
 
@@ -46,6 +48,14 @@ export default new Router({
         path: '/reportContent/report',
         name: 'edit',
         component: reportEdit
+      }, {
+        path: '/reportContent/charts',
+        name: 'charts',
+        component: charts
+      }, {
+        path: '/reportContent/draw',
+        name: 'draw',
+        component: draw
       }]
     }
   ]

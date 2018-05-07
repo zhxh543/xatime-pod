@@ -26,6 +26,12 @@
           <dd>
             <router-link to="/reportContent/report">创建报表</router-link>
           </dd>
+          <dd>
+            <router-link to="/reportContent/charts">图表</router-link>
+          </dd>
+          <dd>
+            <router-link to="/reportContent/draw">改变大小</router-link>
+          </dd>
         </dl>
       </li>
     </ul>

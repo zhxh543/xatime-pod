@@ -8,6 +8,7 @@ import less from 'less'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@static/css/reset.css'
 import echarts from 'echarts'
+import jquery from 'jquery'
 
 
 Vue.use(ElementUI)
